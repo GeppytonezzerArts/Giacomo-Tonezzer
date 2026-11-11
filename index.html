@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Giacomo Tonezzer</title>
+<meta name="description" content="Giacomo Tonezzer: support engineer from Trento, Italy, who builds working software with Claude.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,300..900;1,62..125,300..900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --steel: #e6e9ec;        /* brushed sheet */
+    --plate: #f6f7f8;        /* lighter plate for frames */
+    --anthracite: #2a2f36;   /* text */
+    --scale: #6b737d;        /* mill scale grey, secondary text */
+    --straw: #d8b24a;        /* heat tint, coolest edge */
+    --bronze: #b2622a;
+    --violet: #7a3f8e;
+    --blue: #2c5ea8;         /* heat tint, hottest edge */
+    --rail: 56px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background:
+      repeating-linear-gradient(90deg, rgba(255,255,255,.35) 0 1px, transparent 1px 3px),
+      var(--steel);
+    color: var(--anthracite);
+    font-family: "Archivo", "Helvetica Neue", Arial, sans-serif;
+    font-size: 1.0625rem;
+    line-height: 1.55;
+    font-variation-settings: "wdth" 100;
+  }
+  a { color: var(--blue); text-underline-offset: 0.18em; }
+  a:focus-visible, .top a:focus-visible { outline: 3px solid var(--violet); outline-offset: 3px; }
+
+  /* The kerf: one cut line down the page, coloured like heat tint on steel */
+  .sheet { position: relative; max-width: 68rem; margin: 0 auto; padding: 0 1.5rem 5rem calc(var(--rail) + 1.5rem); }
+  .sheet::before {
+    content: ""; position: absolute; top: 0; bottom: 0; left: calc(var(--rail) / 2 + .75rem);
+    width: 3px; border-radius: 2px;
+    background: linear-gradient(180deg, var(--straw), var(--bronze) 22%, var(--violet) 55%, var(--blue) 85%, var(--blue));
+    transform-origin: top; animation: cut 1.6s cubic-bezier(.3,.7,.2,1) both;
+  }
+  @keyframes cut { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+  @media (prefers-reduced-motion: reduce) { .sheet::before { animation: none; } html { scroll-behavior: auto; } }
+
+  /* Pierce point: where the cut starts for each section */
+  .pierce { position: relative; }
+  .pierce::before {
+    content: ""; position: absolute; top: .55em;
+    left: calc(-1 * (var(--rail) / 2 + .75rem) - 7.5px);
+    width: 18px; height: 18px; border-radius: 50%;
+    background: var(--steel); border: 3px solid var(--anthracite);
+  }
+
+  .top { display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; justify-content: space-between; align-items: baseline; padding: 1.75rem 0 0; font-size: .95rem; }
+  .top .name { font-weight: 700; font-variation-settings: "wdth" 112; }
+  .top nav { display: flex; flex-wrap: wrap; gap: 1.25rem; }
+  .top a { color: var(--anthracite); }
+
+  .hero { padding: clamp(3.5rem, 11vw, 8rem) 0 clamp(3rem, 8vw, 6rem); }
+  .hero h1 {
+    margin: 0; max-width: 15ch;
+    font-size: clamp(2.5rem, 7.4vw, 5.6rem); line-height: .98; font-weight: 800;
+    font-variation-settings: "wdth" 118; letter-spacing: -0.02em;
+    background: linear-gradient(100deg, var(--anthracite) 0 38%, var(--violet) 62%, var(--blue) 82%, var(--bronze));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .hero p { max-width: 38rem; margin: 2rem 0 0; font-size: 1.25rem; line-height: 1.45; }
+
+  h2 { margin: 0 0 1.25rem; font-size: clamp(1.6rem, 3.4vw, 2.3rem); line-height: 1.1; font-weight: 750; font-variation-settings: "wdth" 114; letter-spacing: -0.01em; }
+  section { padding: clamp(2.5rem, 6vw, 4.5rem) 0 0; }
+  section > p { max-width: 40rem; margin: 0 0 1rem; }
+
+  .facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr)); gap: 1.5rem 2rem; margin: 2rem 0 0; padding: 0; list-style: none; max-width: 52rem; }
+  .facts b { display: block; font-size: 2.1rem; line-height: 1; font-weight: 800; font-variation-settings: "wdth" 118; }
+  .facts span { color: var(--scale); font-size: .95rem; }
+
+  .project { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 2rem 2.5rem; align-items: start; padding: 2.25rem 0; border-top: 1px solid rgba(42,47,54,.18); }
+  .project:first-of-type { border-top: 0; padding-top: .5rem; }
+  .project h3 { margin: 0 0 .5rem; font-size: 1.45rem; line-height: 1.15; font-weight: 750; font-variation-settings: "wdth" 110; }
+  .project p { margin: 0 0 .75rem; max-width: 34rem; }
+  .project .made { color: var(--scale); font-size: .95rem; }
+  .shot { margin: 0; background: var(--plate); border: 1px solid rgba(42,47,54,.25); border-radius: 4px; overflow: hidden; display: grid; place-items: center; box-shadow: 0 14px 30px -18px rgba(42,47,54,.55); }
+  .shot img { width: 100%; height: auto; display: block; }
+  .shot .empty { padding: 1rem; text-align: center; color: var(--scale); font-size: .95rem; }
+
+  .path { list-style: none; margin: 0; padding: 0; max-width: 46rem; }
+  .path li { display: grid; grid-template-columns: 9.5rem 1fr; gap: 1rem 1.5rem; padding: 1.1rem 0; border-top: 1px solid rgba(42,47,54,.18); }
+  .path li:first-child { border-top: 0; }
+  .path time { color: var(--scale); font-variant-numeric: tabular-nums; }
+  .path b { display: block; font-weight: 700; }
+
+  .contact p { font-size: 1.25rem; max-width: 34rem; }
+  .contact .links { display: flex; flex-wrap: wrap; gap: .75rem 1.75rem; margin-top: 1.25rem; font-weight: 650; }
+  footer { margin-top: 4rem; color: var(--scale); font-size: .9rem; }
+
+  @media (max-width: 760px) {
+    :root { --rail: 20px; }
+    .sheet { padding-left: calc(var(--rail) + 1.75rem); padding-right: 1.1rem; }
+    .project { grid-template-columns: 1fr; }
+    .path li { grid-template-columns: 1fr; gap: .15rem; }
+    .pierce::before { width: 14px; height: 14px; left: calc(-1 * (var(--rail) / 2 + .75rem) - 5.5px - 1rem + .75rem); }
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <header class="top">
+    <span class="name">Giacomo Tonezzer</span>
+    <nav aria-label="Sections">
+      <a href="#projects">Projects</a>
+      <a href="#background">Background</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="hero">
+      <h1>Eight years on the phone with factories. Now I build the tools myself.</h1>
+      <p>I'm a support engineer from Trento, Italy. I am not a trained developer. I describe what a tool has to do, direct Claude while it writes the code, test the result hard, and ship software my team uses every day.</p>
+    </div>
+
+    <section id="support">
+      <h2 class="pierce">Support first</h2>
+      <p>For ten years I have worked at BLM Group, which makes laser tube-cutting and bending machines. Most of that time I was the person customers called when production had stopped and the software was the suspect.</p>
+      <p>That work taught me to find a fault on a system I cannot see, and to explain the fix to whoever is on the line, from a machine operator to a company owner.</p>
+      <ul class="facts">
+        <li><b>2,500+</b><span>support tickets handled</span></li>
+        <li><b>300+</b><span>people trained, in more than 100 courses</span></li>
+        <li><b>50+</b><span>customers guided through connecting machines to their factory systems</span></li>
+      </ul>
+    </section>
+
+    <section id="projects">
+      <h2 class="pierce">Things I built with Claude</h2>
+      <p>All of these date from 2026. The first three are internal tools I built at BLM. The fourth is a personal project you can try yourself.</p>
+
+      <article class="project">
+        <div>
+          <h3>BLMZilla</h3>
+          <p>A desktop app for our internal Bugzilla server that also manages test cases. It replaced the old bug-tracking client and a paid test-management licence, and put both jobs in one window.</p>
+          <p class="made">My part: requirements, direction, testing and rollout to the team.</p>
+        </div>
+        <figure class="shot"><img src="img/blmzilla.webp" alt="BLMZilla, test execution view" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'empty',textContent:'Screenshot to add: img/blmzilla.webp'}))"></figure>
+      </article>
+
+      <article class="project">
+        <div>
+          <h3>Automated test suite</h3>
+          <p>More than 200 automated tests for our production software, covering data integrity, stress and a full production cycle. I run it on every release candidate, and it files regressions to Bugzilla on its own.</p>
+          <p class="made">My part: test design, reusable steps and checkpoints, running it on each release.</p>
+        </div>
+        <figure class="shot"><img src="img/test-suite.webp" alt="QA suite, list of automated test cases" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'empty',textContent:'Screenshot to add: img/test-suite.webp'}))"></figure>
+      </article>
+
+      <article class="project">
+        <div>
+          <h3>Sheet metal CAM</h3>
+          <p>A working CAM application for laser cutting sheet metal: it imports a drawing, nests the parts on the sheet, applies cutting technology, lead-ins and micro-joints, and writes the CNC program. The first working version took one week.</p>
+          <p class="made">My part: ten years of knowing what a CAM must get right, turned into instructions.</p>
+        </div>
+        <figure class="shot"><img src="img/cam.webp" alt="Sheet metal CAM nesting view" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'empty',textContent:'Screenshot to add: img/cam.webp'}))"></figure>
+      </article>
+
+      <article class="project">
+        <div>
+          <h3>Tonezzer Racers</h3>
+          <p>A personal project, and the one you can try right now: a free off-road racing game that runs in the browser. Seven vehicles, twelve circuits, split-screen for two players and online leaderboards, in Italian and English.</p>
+          <p class="made">My part: direction, game design and a great deal of test driving. Built on three.js.</p>
+          <p><a href="https://geppytonezzerarts.github.io/tonezzers-arts/">Play Tonezzer Racers</a></p>
+        </div>
+        <figure class="shot"><img src="img/racers.webp" alt="Tonezzer Racers in play" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'empty',textContent:'Screenshot to add: img/racers.webp'}))"></figure>
+      </article>
+    </section>
+
+    <section id="background">
+      <h2 class="pierce">Background</h2>
+      <ol class="path">
+        <li><time>2025 to today</time><div><b>Software Quality Assurance and Documentation Engineer, BLM Group</b>I test every release before customers get it, write the release notes and manuals in Italian and English, and train the service technicians.</div></li>
+        <li><time>2016 to 2024</time><div><b>Service Engineer, Offline Software, BLM Group</b>Front-line support for customers of BLM's programming software: tickets, remote diagnosis, training.</div></li>
+        <li><time>2015 to 2016</time><div><b>Technical Support, Waldner Tecnologie Medicali</b>On-site service of Karl Storz endoscopy systems, plus the server racks and video routing of integrated operating rooms.</div></li>
+        <li><time>Education</time><div><b>B.Sc. in Medical Radiology Techniques, University of Verona</b>Before that, a technical diploma in Electronics and Telecommunications at ITI G. Marconi, Rovereto.</div></li>
+      </ol>
+    </section>
+
+    <section id="contact" class="contact">
+      <h2 class="pierce">Get in touch</h2>
+      <p>I'm looking for a role where support, hardware and AI meet, and I'm ready to relocate for it.</p>
+      <div class="links">
+        <a href="mailto:giacomo.tonezzer@gmail.com">giacomo.tonezzer@gmail.com</a>
+        <a href="https://www.linkedin.com/in/giacomo-tonezzer-ab85516b">LinkedIn</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>Built with Claude, like most things on this page.</footer>
+</div>
+</body>
+</html>

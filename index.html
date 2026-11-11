@@ -4,201 +4,310 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Giacomo Tonezzer</title>
-<meta name="description" content="Giacomo Tonezzer: support engineer from Trento, Italy, who builds working software with Claude.">
+<meta name="description" content="Giacomo Tonezzer, support engineer from Trento, Italy. Eight years of front-line support for industrial customers, and working software built with Claude.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,300..900;1,62..125,300..900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Saira:ital,wdth,wght@0,50..125,100..900;1,50..125,100..900&display=swap" rel="stylesheet">
 <style>
   :root {
-    --steel: #e6e9ec;        /* brushed sheet */
-    --plate: #f6f7f8;        /* lighter plate for frames */
-    --anthracite: #2a2f36;   /* text */
-    --scale: #6b737d;        /* mill scale grey, secondary text */
-    --straw: #d8b24a;        /* heat tint, coolest edge */
-    --bronze: #b2622a;
-    --violet: #7a3f8e;
-    --blue: #2c5ea8;         /* heat tint, hottest edge */
-    --rail: 56px;
+    --paper: #eff0ee;     /* workshop drawing paper */
+    --plate: #c5cbd0;     /* cold-rolled sheet */
+    --bed: #22272d;       /* cutting bed, also the ink */
+    --scale: #5f6870;     /* mill-scale grey for secondary text */
+    --spark: #ffb347;     /* the kerf while it is hot */
+    --tint: #3d5aa6;      /* blue heat tint left on a cut edge */
+    --straw: #c39a3f;     /* straw heat tint, the cooler band */
+    --measure: 40rem;
   }
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
-  body {
-    margin: 0;
-    background:
-      repeating-linear-gradient(90deg, rgba(255,255,255,.35) 0 1px, transparent 1px 3px),
-      var(--steel);
-    color: var(--anthracite);
-    font-family: "Archivo", "Helvetica Neue", Arial, sans-serif;
-    font-size: 1.0625rem;
-    line-height: 1.55;
-    font-variation-settings: "wdth" 100;
+  body { margin: 0; background: var(--paper); color: var(--bed); font-family: "Saira", "Helvetica Neue", Arial, sans-serif; font-stretch: 100%; font-size: 1.0625rem; line-height: 1.6; }
+  a { color: var(--tint); text-underline-offset: .2em; text-decoration-thickness: 1px; }
+  a:hover { text-decoration-thickness: 2px; }
+  :focus-visible { outline: 3px solid var(--tint); outline-offset: 3px; }
+  .wrap { max-width: 76rem; margin: 0 auto; padding: 0 clamp(1rem, 4vw, 3rem); }
+  .vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+  /* ---------- The sheet ---------- */
+  .bench { padding-top: clamp(1rem, 3vw, 2.5rem); }
+  .sheet { display: block; width: 100%; height: auto; }
+  .sheet .marked path { fill: rgba(34,39,45,.2); stroke: rgba(34,39,45,.6); stroke-width: 7; }
+  .sheet .part { fill: var(--bed); stroke: var(--tint); stroke-width: 9; stroke-linejoin: round; paint-order: stroke; transition: fill .45s ease-out, stroke 1.4s ease-out; }
+  .sheet.cutting .part { fill: transparent; stroke: transparent; transition: none; }
+  .sheet.cutting .part.hot { stroke: var(--spark); filter: url(#glow); }
+  .sheet.cutting .letter.dropped .part { fill: var(--bed); stroke: var(--tint); filter: none; transition: fill .45s ease-out, stroke 1.4s ease-out; }
+  .sheet .head { opacity: 0; }
+  .sheet.cutting .head { opacity: 1; }
+
+  .ticket { display: flex; flex-wrap: wrap; gap: .35rem 2.25rem; align-items: baseline; margin: .9rem 0 0; padding: 0; font-size: .9rem; color: var(--scale); }
+  .ticket div { display: flex; gap: .45rem; }
+  .ticket dt { font-weight: 400; }
+  .ticket dd { margin: 0; color: var(--bed); font-weight: 600; font-variant-numeric: tabular-nums; }
+  .ticket button { margin-left: auto; font: inherit; font-weight: 600; color: var(--bed); background: none; border: 1.5px solid var(--bed); border-radius: 2px; padding: .3rem .8rem; cursor: pointer; }
+  .ticket button:hover { background: var(--bed); color: var(--paper); }
+
+  /* ---------- Opening statement ---------- */
+  .opening { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 2rem clamp(2rem, 6vw, 6rem); align-items: end; padding-top: clamp(3rem, 8vw, 6.5rem); padding-bottom: clamp(3.5rem, 9vw, 7rem); }
+  .opening h2 { margin: 0; font-size: clamp(2rem, 4.6vw, 3.9rem); line-height: 1.04; font-weight: 600; font-stretch: 82%; letter-spacing: -.012em; text-wrap: balance; }
+  .opening p { margin: 0 0 1rem; max-width: 30rem; }
+  .opening p:last-child { margin-bottom: .35rem; }
+
+  /* ---------- Work, on the cutting bed ---------- */
+  .work { background: var(--bed); color: #e9ecee; padding: clamp(3.5rem, 8vw, 6.5rem) 0 clamp(2rem, 5vw, 4rem); }
+  .work a { color: #a9bcec; }
+  .work :focus-visible { outline-color: var(--spark); }
+  .work > .wrap > h2 { margin: 0 0 .6rem; font-size: clamp(1.7rem, 3.2vw, 2.5rem); line-height: 1.1; font-weight: 600; font-stretch: 86%; }
+  .work > .wrap > p { margin: 0; max-width: var(--measure); color: #b4bcc3; }
+  .piece { margin: clamp(3rem, 7vw, 5.5rem) 0 0; }
+  .piece img { display: block; width: 100%; height: auto; border: 1px solid #3c444d; border-radius: 2px; background: #15181c; }
+  .piece figcaption { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: .5rem clamp(1.5rem, 5vw, 5rem); padding-top: 1.4rem; }
+  .piece h3 { margin: 0; font-size: clamp(1.5rem, 2.6vw, 2.1rem); line-height: 1.08; font-weight: 600; font-stretch: 86%; }
+  .piece .mine { margin: .6rem 0 0; color: #98a2ab; font-size: .95rem; max-width: 20rem; }
+  .piece .what p { margin: 0 0 .8rem; max-width: var(--measure); }
+  .piece.narrow { max-width: 58rem; }
+
+  /* ---------- Background ---------- */
+  .path { padding-top: clamp(3.5rem, 8vw, 6.5rem); }
+  .path h2, .block h2 { margin: 0 0 1.6rem; font-size: clamp(1.7rem, 3.2vw, 2.5rem); line-height: 1.1; font-weight: 600; font-stretch: 86%; }
+  .path table { width: 100%; max-width: 60rem; border-collapse: collapse; }
+  .path th, .path td { text-align: left; vertical-align: top; padding: 1.05rem 0; border-top: 1px solid rgba(34,39,45,.22); }
+  .path th { width: 11rem; padding-right: 1.5rem; font-weight: 400; color: var(--scale); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .path td b { display: block; font-weight: 600; }
+  .path tr:last-child th, .path tr:last-child td { border-bottom: 1px solid rgba(34,39,45,.22); }
+
+  /* ---------- Title block, as on a technical drawing ---------- */
+  .block { padding: clamp(3.5rem, 8vw, 6.5rem) 0 clamp(2.5rem, 6vw, 4rem); }
+  .block > .wrap > p { max-width: var(--measure); margin: 0 0 2rem; }
+  .titleblock { display: grid; grid-template-columns: 8fr 7fr 5fr 3fr; border: 1.5px solid var(--bed); margin: 0; }
+  .titleblock div { padding: .7rem .95rem .8rem; border-right: 1px solid var(--bed); border-bottom: 1px solid var(--bed); min-width: 0; }
+  .titleblock dt { font-size: .78rem; color: var(--scale); line-height: 1.3; }
+  .titleblock dd { margin: .15rem 0 0; font-weight: 600; overflow-wrap: anywhere; }
+  .titleblock .who { grid-row: span 2; display: flex; flex-direction: column; justify-content: flex-end; }
+  .titleblock .who dd { font-size: clamp(1.5rem, 2.8vw, 2.2rem); line-height: 1.05; font-stretch: 86%; }
+  .titleblock .end { border-right: 0; }
+  .titleblock .last { border-bottom: 0; }
+
+  @media (max-width: 820px) {
+    .opening { grid-template-columns: 1fr; align-items: start; }
+    .piece figcaption { grid-template-columns: 1fr; }
+    .piece .mine { max-width: none; }
+    .path th { display: block; width: auto; padding: 1.05rem 0 0; border-top: 1px solid rgba(34,39,45,.22); }
+    .path td { display: block; border-top: 0; padding-top: .15rem; }
+    .path tr:last-child th { border-bottom: 0; }
+    .titleblock { grid-template-columns: 1fr 1fr; }
+    .titleblock .who { grid-column: span 2; grid-row: auto; }
+    .titleblock div { border-right: 1px solid var(--bed); border-bottom: 1px solid var(--bed); }
+    .titleblock div:nth-child(2n+1):not(.who) { border-right: 0; }
+    .titleblock .who { border-right: 0; }
+    .titleblock div:nth-last-child(-n+2) { border-bottom: 0; }
+    .ticket button { margin-left: 0; }
   }
-  a { color: var(--blue); text-underline-offset: 0.18em; }
-  a:focus-visible, .top a:focus-visible { outline: 3px solid var(--violet); outline-offset: 3px; }
-
-  /* The kerf: one cut line down the page, coloured like heat tint on steel */
-  .sheet { position: relative; max-width: 68rem; margin: 0 auto; padding: 0 1.5rem 5rem calc(var(--rail) + 1.5rem); }
-  .sheet::before {
-    content: ""; position: absolute; top: 0; bottom: 0; left: calc(var(--rail) / 2 + .75rem);
-    width: 3px; border-radius: 2px;
-    background: linear-gradient(180deg, var(--straw), var(--bronze) 22%, var(--violet) 55%, var(--blue) 85%, var(--blue));
-    transform-origin: top; animation: cut 1.6s cubic-bezier(.3,.7,.2,1) both;
-  }
-  @keyframes cut { from { transform: scaleY(0); } to { transform: scaleY(1); } }
-  @media (prefers-reduced-motion: reduce) { .sheet::before { animation: none; } html { scroll-behavior: auto; } }
-
-  /* Pierce point: where the cut starts for each section */
-  .pierce { position: relative; }
-  .pierce::before {
-    content: ""; position: absolute; top: .55em;
-    left: calc(-1 * (var(--rail) / 2 + .75rem) - 7.5px);
-    width: 18px; height: 18px; border-radius: 50%;
-    background: var(--steel); border: 3px solid var(--anthracite);
-  }
-
-  .top { display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; justify-content: space-between; align-items: baseline; padding: 1.75rem 0 0; font-size: .95rem; }
-  .top .name { font-weight: 700; font-variation-settings: "wdth" 112; }
-  .top nav { display: flex; flex-wrap: wrap; gap: 1.25rem; }
-  .top a { color: var(--anthracite); }
-
-  .hero { padding: clamp(3.5rem, 11vw, 8rem) 0 clamp(3rem, 8vw, 6rem); }
-  .hero h1 {
-    margin: 0; max-width: 15ch;
-    font-size: clamp(2.5rem, 7.4vw, 5.6rem); line-height: .98; font-weight: 800;
-    font-variation-settings: "wdth" 118; letter-spacing: -0.02em;
-    background: linear-gradient(100deg, var(--anthracite) 0 38%, var(--violet) 62%, var(--blue) 82%, var(--bronze));
-    -webkit-background-clip: text; background-clip: text; color: transparent;
-  }
-  .hero p { max-width: 38rem; margin: 2rem 0 0; font-size: 1.25rem; line-height: 1.45; }
-
-  h2 { margin: 0 0 1.25rem; font-size: clamp(1.6rem, 3.4vw, 2.3rem); line-height: 1.1; font-weight: 750; font-variation-settings: "wdth" 114; letter-spacing: -0.01em; }
-  section { padding: clamp(2.5rem, 6vw, 4.5rem) 0 0; }
-  section > p { max-width: 40rem; margin: 0 0 1rem; }
-
-  .facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr)); gap: 1.5rem 2rem; margin: 2rem 0 0; padding: 0; list-style: none; max-width: 52rem; }
-  .facts b { display: block; font-size: 2.1rem; line-height: 1; font-weight: 800; font-variation-settings: "wdth" 118; }
-  .facts span { color: var(--scale); font-size: .95rem; }
-
-  .project { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 2rem 2.5rem; align-items: start; padding: 2.25rem 0; border-top: 1px solid rgba(42,47,54,.18); }
-  .project:first-of-type { border-top: 0; padding-top: .5rem; }
-  .project h3 { margin: 0 0 .5rem; font-size: 1.45rem; line-height: 1.15; font-weight: 750; font-variation-settings: "wdth" 110; }
-  .project p { margin: 0 0 .75rem; max-width: 34rem; }
-  .project .made { color: var(--scale); font-size: .95rem; }
-  .shot { margin: 0; background: var(--plate); border: 1px solid rgba(42,47,54,.25); border-radius: 4px; overflow: hidden; display: grid; place-items: center; box-shadow: 0 14px 30px -18px rgba(42,47,54,.55); }
-  .shot img { width: 100%; height: auto; display: block; }
-  .shot .empty { padding: 1rem; text-align: center; color: var(--scale); font-size: .95rem; }
-
-  .path { list-style: none; margin: 0; padding: 0; max-width: 46rem; }
-  .path li { display: grid; grid-template-columns: 9.5rem 1fr; gap: 1rem 1.5rem; padding: 1.1rem 0; border-top: 1px solid rgba(42,47,54,.18); }
-  .path li:first-child { border-top: 0; }
-  .path time { color: var(--scale); font-variant-numeric: tabular-nums; }
-  .path b { display: block; font-weight: 700; }
-
-  .contact p { font-size: 1.25rem; max-width: 34rem; }
-  .contact .links { display: flex; flex-wrap: wrap; gap: .75rem 1.75rem; margin-top: 1.25rem; font-weight: 650; }
-  footer { margin-top: 4rem; color: var(--scale); font-size: .9rem; }
-
-  @media (max-width: 760px) {
-    :root { --rail: 20px; }
-    .sheet { padding-left: calc(var(--rail) + 1.75rem); padding-right: 1.1rem; }
-    .project { grid-template-columns: 1fr; }
-    .path li { grid-template-columns: 1fr; gap: .15rem; }
-    .pierce::before { width: 14px; height: 14px; left: calc(-1 * (var(--rail) / 2 + .75rem) - 5.5px - 1rem + .75rem); }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .sheet .part { transition: none; }
+    .ticket button { display: none; }
   }
 </style>
 </head>
 <body>
-<div class="sheet">
 
-  <header class="top">
-    <span class="name">Giacomo Tonezzer</span>
-    <nav aria-label="Sections">
-      <a href="#projects">Projects</a>
-      <a href="#background">Background</a>
-      <a href="#contact">Contact</a>
-    </nav>
-  </header>
+<header class="bench wrap">
+  <h1 class="vh">Giacomo Tonezzer</h1>
+  <svg class="sheet" id="sheet" viewBox="0 0 6900 1800" role="img" aria-label="A rectangular steel tube held in a chuck, with the name Giacomo marked on its top face and Tonezzer laser-cut through its side">
+    <defs>
+      <linearGradient id="steel" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#cfd4d8"/><stop offset=".5" stop-color="#bfc5ca"/><stop offset="1" stop-color="#a9b0b6"/>
+      </linearGradient>
+      <linearGradient id="top" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e9ecee"/><stop offset="1" stop-color="#d6dbdf"/></linearGradient>
+      <linearGradient id="bore" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0f1215"/><stop offset="1" stop-color="#2c333a"/></linearGradient>
+      <linearGradient id="chuck" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#3a424a"/><stop offset=".5" stop-color="#262c32"/><stop offset="1" stop-color="#1b2025"/></linearGradient>
+      <filter id="soft" x="-10%" y="-200%" width="120%" height="500%"><feGaussianBlur stdDeviation="26"/></filter>
+      <pattern id="grain" width="9" height="9" patternUnits="userSpaceOnUse"><rect width="9" height="2" fill="#fff" opacity=".17"/></pattern>
+      <filter id="glow" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      <radialGradient id="beam"><stop offset="0" stop-color="#fff"/><stop offset=".35" stop-color="#ffe2a8"/><stop offset="1" stop-color="#ffb347" stop-opacity="0"/></radialGradient>
+    </defs>
+    <ellipse cx="3650" cy="1660" rx="3200" ry="52" fill="#22272d" opacity=".22" filter="url(#soft)"/>
+    <!-- top face -->
+    <polygon points="500,520 6400,520 6660,260 760,260" fill="url(#top)"/>
+    <polygon points="500,520 6400,520 6660,260 760,260" fill="url(#grain)"/>
+    <!-- cut end: the wall thickness and the hollow inside -->
+    <polygon points="6400,520 6660,260 6660,1260 6400,1520" fill="#8f979e"/>
+    <polygon points="6450,540 6610,380 6610,1240 6450,1400" fill="url(#bore)"/>
+    <!-- front face -->
+    <rect x="500" y="520" width="5900" height="1000" fill="url(#steel)"/>
+    <rect x="500" y="520" width="5900" height="1000" fill="url(#grain)"/>
+    <line x1="500" y1="520" x2="6400" y2="520" stroke="#fff" stroke-width="7" opacity=".7"/>
+    <line x1="6400" y1="520" x2="6400" y2="1520" stroke="#fff" stroke-width="6" opacity=".45"/>
+    <g class="marked" transform="matrix(0.36 0 -0.25 0.25 1092.0 304.0)"><path d="M293 -6Q333 -8 359 -8Q449 -8 524 4Q562 8 597 16V159Q555 155 534 152Q517 151 479 147Q441 145 429 145Q368 145 339.5 147.5Q311 150 293 160Z"/><path d="M107 628Q74 590 60.5 523.0Q47 456 47 344Q47 249 56.0 188.0Q65 127 87 88Q110 48 149.0 27.0Q188 6 251 -2V344Q251 415 255.0 452.5Q259 490 270 510Q282 531 304.5 539.0Q327 547 369 547V696H359Q259 696 199.5 681.0Q140 666 107 628Z"/><path d="M411 424H340V279H600V671Q553 682 483 688Q449 693 411 694Z"/><path d="M785 0H985V688H785Z"/><path d="M1331 0H1348L1427 274L1312 688H1112Z"/><path d="M1556 566H1389L1431 412H1511L1393 0H1576L1795 688H1591Z"/><path d="M2150 -7Q2158 -8 2175 -8H2201Q2268 -8 2332 2Q2365 7 2383 12V155Q2368 154 2333 150Q2286 145 2251 145Q2212 145 2188.5 147.5Q2165 150 2150 156Z"/><path d="M1954 620Q1925 581 1914.5 516.5Q1904 452 1904 344Q1904 249 1911.5 190.0Q1919 131 1939 91Q1960 50 2000.5 27.5Q2041 5 2108 -3V344Q2108 400 2110 452Q2112 492 2125.5 512.0Q2139 532 2168 537Q2196 543 2251 543Q2308 543 2348 538Q2364 537 2387 533V678Q2338 689 2276 693Q2242 696 2201 696Q2101 696 2042.5 678.5Q1984 661 1954 620Z"/><path d="M2932 344Q2932 257 2931 230Q2929 189 2920.0 170.5Q2911 152 2891 148Q2871 145 2834 145Q2791 145 2778 149V-7Q2787 -8 2805 -8H2834Q2946 -8 3007.5 9.5Q3069 27 3097 67Q3123 104 3129.5 164.0Q3136 224 3136 344Q3136 449 3131.5 505.5Q3127 562 3109 599Q3089 641 3047.5 663.0Q3006 685 2932 692Z"/><path d="M2624 664Q2591 648 2572.0 621.0Q2553 594 2544 554Q2536 519 2534.0 473.5Q2532 428 2532 344Q2532 239 2536.5 183.0Q2541 127 2559 89Q2579 48 2620.0 26.0Q2661 4 2736 -4V344Q2736 403 2738 457Q2740 498 2748.5 517.0Q2757 536 2777 539Q2794 543 2834 543Q2875 543 2890 540V695Q2881 696 2863 696H2834Q2688 696 2624 664Z"/><path d="M3308 30V0H3492L3780 612L3747 688H3617Z"/><path d="M3873 399H3869L3802 561L3716 377L3873 0H4063V688H3873Z"/><path d="M3308 129 3492 521V688H3308Z"/><path d="M4635 344Q4635 257 4634 230Q4632 189 4623.0 170.5Q4614 152 4594 148Q4574 145 4537 145Q4494 145 4481 149V-7Q4490 -8 4508 -8H4537Q4649 -8 4710.5 9.5Q4772 27 4800 67Q4826 104 4832.5 164.0Q4839 224 4839 344Q4839 449 4834.5 505.5Q4830 562 4812 599Q4792 641 4750.5 663.0Q4709 685 4635 692Z"/><path d="M4327 664Q4294 648 4275.0 621.0Q4256 594 4247 554Q4239 519 4237.0 473.5Q4235 428 4235 344Q4235 239 4239.5 183.0Q4244 127 4262 89Q4282 48 4323.0 26.0Q4364 4 4439 -4V344Q4439 403 4441 457Q4443 498 4451.5 517.0Q4460 536 4480 539Q4497 543 4537 543Q4578 543 4593 540V695Q4584 696 4566 696H4537Q4391 696 4327 664Z"/></g>
+    <!-- chuck -->
+    <rect x="70" y="110" width="560" height="1590" rx="34" fill="url(#chuck)"/>
+    <rect x="590" y="110" width="40" height="1590" rx="12" fill="#161a1e"/>
+    <rect x="630" y="330" width="150" height="150" rx="14" fill="#2f363d"/>
+    <rect x="630" y="1540" width="150" height="110" rx="14" fill="#2f363d"/>
+    <circle cx="210" cy="290" r="34" fill="#161a1e"/><circle cx="210" cy="905" r="34" fill="#161a1e"/><circle cx="210" cy="1520" r="34" fill="#161a1e"/>
+    <circle cx="430" cy="290" r="34" fill="#161a1e"/><circle cx="430" cy="1520" r="34" fill="#161a1e"/>
+    <g id="name" transform="translate(842 676)"><g class="letter" data-i="0"><path class="part" d="M9 0H572V160H9Z"/><path class="part" d="M190 200H390V688H190Z"/></g><g class="letter" data-i="1"><path class="part" d="M1058 344Q1058 257 1057 230Q1055 189 1046.0 170.5Q1037 152 1017 148Q997 145 960 145Q917 145 904 149V-7Q913 -8 931 -8H960Q1072 -8 1133.5 9.5Q1195 27 1223 67Q1249 104 1255.5 164.0Q1262 224 1262 344Q1262 449 1257.5 505.5Q1253 562 1235 599Q1215 641 1173.5 663.0Q1132 685 1058 692Z"/><path class="part" d="M750 664Q717 648 698.0 621.0Q679 594 670 554Q662 519 660.0 473.5Q658 428 658 344Q658 239 662.5 183.0Q667 127 685 89Q705 48 746.0 26.0Q787 4 862 -4V344Q862 403 864 457Q866 498 874.5 517.0Q883 536 903 539Q920 543 960 543Q1001 543 1016 540V695Q1007 696 989 696H960Q814 696 750 664Z"/></g><g class="letter" data-i="2"><path class="part" d="M1404 28V0H1604L1990 659V688H1791Z"/><path class="part" d="M1800 251V0H1990V576Z"/><path class="part" d="M1404 111 1594 436V688H1404Z"/></g><g class="letter" data-i="3"><path class="part" d="M2150 0H2350V688H2150Z"/><path class="part" d="M2392 0H2646V153H2392Z"/><path class="part" d="M2392 264H2599V417H2392Z"/><path class="part" d="M2392 535H2646V688H2392Z"/></g><g class="letter" data-i="4"><path class="part" d="M2782 0H3309V142L3301 153H2782Z"/><path class="part" d="M2771 541 3029 193H3271L2903 688H2771Z"/><path class="part" d="M3069 535H3309V688H2955Z"/></g><g class="letter" data-i="5"><path class="part" d="M3430 0H3957V142L3949 153H3430Z"/><path class="part" d="M3419 541 3677 193H3919L3551 688H3419Z"/><path class="part" d="M3717 535H3957V688H3603Z"/></g><g class="letter" data-i="6"><path class="part" d="M4092 0H4292V688H4092Z"/><path class="part" d="M4334 0H4588V153H4334Z"/><path class="part" d="M4334 264H4541V417H4334Z"/><path class="part" d="M4334 535H4588V688H4334Z"/></g><g class="letter" data-i="7"><path class="part" d="M4738 0H4938V688H4738Z"/><path class="part" d="M5020 454H4980V301H5014Q5045 301 5061.0 298.5Q5077 296 5086 289Q5094 282 5097.0 268.0Q5100 254 5100 227Q5100 200 5097.0 185.5Q5094 171 5086 164Q5078 157 5062.5 155.0Q5047 153 5014 153H4980V0H5083Q5154 0 5198.0 14.0Q5242 28 5266 57Q5288 84 5295.5 124.0Q5303 164 5303 227Q5303 308 5288 352Q5267 408 5214 431L5318 688H5108Z"/></g></g>
+    <circle class="head" id="head" r="46" fill="url(#beam)"/>
+  </svg>
+  <dl class="ticket">
+    <div><dt>Program</dt><dd>TONEZZER01</dd></div>
+    <div><dt>Section</dt><dd>120 × 60 × 4 mm</dd></div>
+    <div><dt>Bar</dt><dd>6000 mm, steel</dd></div>
+    <div><dt>Assist gas</dt><dd>nitrogen</dd></div>
+    <button type="button" id="again">Cut it again</button>
+  </dl>
+</header>
 
-  <main>
-    <div class="hero">
-      <h1>Eight years on the phone with factories. Now I build the tools myself.</h1>
-      <p>I'm a support engineer from Trento, Italy. I am not a trained developer. I describe what a tool has to do, direct Claude while it writes the code, test the result hard, and ship software my team uses every day.</p>
+<main>
+  <section class="opening wrap">
+    <h2>For eight years, factories called me when production had stopped. Now I build the tools myself.</h2>
+    <div>
+      <p>I'm Giacomo, a support engineer from Trento, Italy. I work at BLM Group, which makes Lasertube machines: lasers that cut steel tube, like the one above.</p>
+      <p>I am not a trained developer. I decide what a tool must do, direct Claude while it writes the code, test the result until it breaks, and ship what survives. My team works with it every day.</p>
     </div>
+  </section>
 
-    <section id="support">
-      <h2 class="pierce">Support first</h2>
-      <p>For ten years I have worked at BLM Group, which makes laser tube-cutting and bending machines. Most of that time I was the person customers called when production had stopped and the software was the suspect.</p>
-      <p>That work taught me to find a fault on a system I cannot see, and to explain the fix to whoever is on the line, from a machine operator to a company owner.</p>
-      <ul class="facts">
-        <li><b>2,500+</b><span>support tickets handled</span></li>
-        <li><b>300+</b><span>people trained, in more than 100 courses</span></li>
-        <li><b>50+</b><span>customers guided through connecting machines to their factory systems</span></li>
-      </ul>
-    </section>
+  <section class="work" id="work">
+    <div class="wrap">
+      <h2>Four things I built in 2026</h2>
+      <p>Three are internal tools at BLM. The fourth is a game you can play right now.</p>
 
-    <section id="projects">
-      <h2 class="pierce">Things I built with Claude</h2>
-      <p>All of these date from 2026. The first three are internal tools I built at BLM. The fourth is a personal project you can try yourself.</p>
+      <figure class="piece">
+        <img src="img/blmzilla.webp" alt="BLMZilla running a test session: the list of test cases on the left, the selected case and the pass, fail, blocked and retry buttons on the right" width="1600" height="858" loading="lazy">
+        <figcaption>
+          <div><h3>BLMZilla</h3><p class="mine">I wrote the requirements, directed the build, tested it and rolled it out to the team.</p></div>
+          <div class="what">
+            <p>A desktop app for our Bugzilla server that also runs test sessions. Before it, we tracked bugs in one program and paid for a second one to manage tests.</p>
+            <p>Now a tester marks a case as failed and writes the bug report from the same window, with the test already linked to it.</p>
+          </div>
+        </figcaption>
+      </figure>
 
-      <article class="project">
-        <div>
-          <h3>BLMZilla</h3>
-          <p>A desktop app for our internal Bugzilla server that also manages test cases. It replaced the old bug-tracking client and a paid test-management licence, and put both jobs in one window.</p>
-          <p class="made">My part: requirements, direction, testing and rollout to the team.</p>
-        </div>
-        <figure class="shot"><img src="img/blmzilla.webp" alt="BLMZilla, test execution view" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'empty',textContent:'Screenshot to add: img/blmzilla.webp'}))"></figure>
-      </article>
+      <figure class="piece narrow">
+        <img src="img/test-suite.webp" alt="The QA suite listing automated test cases grouped by area, with the result and duration of the last run" width="1438" height="922" loading="lazy">
+        <figcaption>
+          <div><h3>Automated test suite</h3><p class="mine">I designed the tests and I run them on every release candidate.</p></div>
+          <div class="what">
+            <p>More than 200 automated tests for our production software. They check data integrity, put the system under load and simulate a full production cycle, from the order to the finished part.</p>
+            <p>When a test that used to pass starts failing, the suite files the regression in Bugzilla by itself.</p>
+          </div>
+        </figcaption>
+      </figure>
 
-      <article class="project">
-        <div>
-          <h3>Automated test suite</h3>
-          <p>More than 200 automated tests for our production software, covering data integrity, stress and a full production cycle. I run it on every release candidate, and it files regressions to Bugzilla on its own.</p>
-          <p class="made">My part: test design, reusable steps and checkpoints, running it on each release.</p>
-        </div>
-        <figure class="shot"><img src="img/test-suite.webp" alt="QA suite, list of automated test cases" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'empty',textContent:'Screenshot to add: img/test-suite.webp'}))"></figure>
-      </article>
+      <figure class="piece">
+        <img src="img/cam.webp" alt="The sheet metal CAM while it nests thirty-six parts on a three by one and a half metre sheet" width="1600" height="764" loading="lazy">
+        <figcaption>
+          <div><h3>Sheet metal CAM</h3><p class="mine">Ten years of knowing what a CAM has to get right, turned into instructions.</p></div>
+          <div class="what">
+            <p>A CAM for laser cutting sheet metal. It imports a drawing, nests the parts on the sheet, assigns the cutting technology, adds lead-ins and micro-joints, and writes the program the machine runs.</p>
+            <p>The first working version took one week.</p>
+          </div>
+        </figcaption>
+      </figure>
 
-      <article class="project">
-        <div>
-          <h3>Sheet metal CAM</h3>
-          <p>A working CAM application for laser cutting sheet metal: it imports a drawing, nests the parts on the sheet, applies cutting technology, lead-ins and micro-joints, and writes the CNC program. The first working version took one week.</p>
-          <p class="made">My part: ten years of knowing what a CAM must get right, turned into instructions.</p>
-        </div>
-        <figure class="shot"><img src="img/cam.webp" alt="Sheet metal CAM nesting view" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'empty',textContent:'Screenshot to add: img/cam.webp'}))"></figure>
-      </article>
+      <figure class="piece">
+        <img src="img/racers.webp" alt="Tonezzer Racers: voxel off-road cars drifting through a desert corner in front of a grandstand" width="1114" height="716" loading="lazy">
+        <figcaption>
+          <div><h3>Tonezzer Racers</h3><p class="mine">Direction, game design and a lot of test driving. Built on three.js.</p></div>
+          <div class="what">
+            <p>A free off-road racing game that runs in the browser, made in my spare time. Seven vehicles, twelve circuits, split-screen for two players and online leaderboards, in Italian and English.</p>
+            <p><a href="https://geppytonezzerarts.github.io/tonezzers-arts/">Play Tonezzer Racers</a></p>
+          </div>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
 
-      <article class="project">
-        <div>
-          <h3>Tonezzer Racers</h3>
-          <p>A personal project, and the one you can try right now: a free off-road racing game that runs in the browser. Seven vehicles, twelve circuits, split-screen for two players and online leaderboards, in Italian and English.</p>
-          <p class="made">My part: direction, game design and a great deal of test driving. Built on three.js.</p>
-          <p><a href="https://geppytonezzerarts.github.io/tonezzers-arts/">Play Tonezzer Racers</a></p>
-        </div>
-        <figure class="shot"><img src="img/racers.webp" alt="Tonezzer Racers in play" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'empty',textContent:'Screenshot to add: img/racers.webp'}))"></figure>
-      </article>
-    </section>
+  <section class="path wrap" id="background">
+    <h2>Where I learned it</h2>
+    <table>
+      <tr><th scope="row">2025 to today</th><td><b>Software Quality Assurance and Documentation Engineer, BLM Group</b>I test every release before customers get it, write the release notes and manuals in Italian and English, and train the service technicians who will explain it to customers.</td></tr>
+      <tr><th scope="row">2016 to 2024</th><td><b>Service Engineer, Offline Software, BLM Group</b>Front-line support for the customers of BLM's programming software. More than 2,500 tickets, around 300 people trained, and over 50 customers guided through connecting their machines to the rest of the factory.</td></tr>
+      <tr><th scope="row">2015 to 2016</th><td><b>Technical Support, Waldner Tecnologie Medicali</b>On-site service of Karl Storz endoscopy systems, and of the server racks and video routing behind integrated operating rooms.</td></tr>
+      <tr><th scope="row">Before that</th><td><b>B.Sc. in Medical Radiology Techniques, University of Verona</b>And a technical diploma in Electronics and Telecommunications at ITI G. Marconi, Rovereto.</td></tr>
+    </table>
+  </section>
 
-    <section id="background">
-      <h2 class="pierce">Background</h2>
-      <ol class="path">
-        <li><time>2025 to today</time><div><b>Software Quality Assurance and Documentation Engineer, BLM Group</b>I test every release before customers get it, write the release notes and manuals in Italian and English, and train the service technicians.</div></li>
-        <li><time>2016 to 2024</time><div><b>Service Engineer, Offline Software, BLM Group</b>Front-line support for customers of BLM's programming software: tickets, remote diagnosis, training.</div></li>
-        <li><time>2015 to 2016</time><div><b>Technical Support, Waldner Tecnologie Medicali</b>On-site service of Karl Storz endoscopy systems, plus the server racks and video routing of integrated operating rooms.</div></li>
-        <li><time>Education</time><div><b>B.Sc. in Medical Radiology Techniques, University of Verona</b>Before that, a technical diploma in Electronics and Telecommunications at ITI G. Marconi, Rovereto.</div></li>
-      </ol>
-    </section>
+  <section class="block" id="contact">
+    <div class="wrap">
+      <h2>Write to me</h2>
+      <p>I'm looking for a role where support, hardware and AI meet, and I will relocate for the right one.</p>
+      <dl class="titleblock">
+        <div class="who"><dt>Drawn by</dt><dd>Giacomo Tonezzer</dd></div>
+        <div><dt>Email</dt><dd><a href="mailto:giacomo.tonezzer@gmail.com">giacomo.tonezzer@gmail.com</a></dd></div>
+        <div><dt>LinkedIn</dt><dd><a href="https://www.linkedin.com/in/giacomo-tonezzer-ab85516b">giacomo-tonezzer</a></dd></div>
+        <div class="end"><dt>Sheet</dt><dd>1 of 1</dd></div>
+        <div class="last"><dt>Based in</dt><dd>Trento, Italy</dd></div>
+        <div class="last"><dt>Languages</dt><dd>Italian, English</dd></div>
+        <div class="end last"><dt>Tooling</dt><dd>Claude</dd></div>
+      </dl>
+    </div>
+  </section>
+</main>
 
-    <section id="contact" class="contact">
-      <h2 class="pierce">Get in touch</h2>
-      <p>I'm looking for a role where support, hardware and AI meet, and I'm ready to relocate for it.</p>
-      <div class="links">
-        <a href="mailto:giacomo.tonezzer@gmail.com">giacomo.tonezzer@gmail.com</a>
-        <a href="https://www.linkedin.com/in/giacomo-tonezzer-ab85516b">LinkedIn</a>
-      </div>
-    </section>
-  </main>
+<script>
+(function () {
+  var sheet = document.getElementById('sheet');
+  var head = document.getElementById('head');
+  var again = document.getElementById('again');
+  var group = document.getElementById('name');
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!sheet || !group.querySelector('.part').getTotalLength || reduce) return;
 
-  <footer>Built with Claude, like most things on this page.</footer>
-</div>
+  var offset = group.transform.baseVal.consolidate().matrix;
+  var letters = Array.prototype.slice.call(group.querySelectorAll('.letter'));
+  var jobs = [];
+  letters.forEach(function (letter) {
+    Array.prototype.forEach.call(letter.querySelectorAll('.part'), function (part, i, all) {
+      jobs.push({ el: part, len: part.getTotalLength(), letter: letter, lastOfLetter: i === all.length - 1 });
+    });
+  });
+  var total = jobs.reduce(function (s, j) { return s + j.len; }, 0);
+  var speed = total / 4200; /* font units per millisecond: the whole name in about four seconds */
+  var running = false;
+
+  function cut() {
+    if (running) return;
+    running = true;
+    sheet.classList.add('cutting');
+    letters.forEach(function (l) { l.classList.remove('dropped'); });
+    jobs.forEach(function (j) {
+      j.el.classList.remove('hot');
+      j.el.style.strokeDasharray = j.len;
+      j.el.style.strokeDashoffset = j.len;
+    });
+    var index = 0, done = 0, last = null;
+    function frame(now) {
+      if (last === null) last = now;
+      var budget = (now - last) * speed;
+      last = now;
+      while (budget > 0 && index < jobs.length) {
+        var j = jobs[index];
+        j.el.classList.add('hot');
+        var step = Math.min(budget, j.len - done);
+        done += step; budget -= step;
+        j.el.style.strokeDashoffset = j.len - done;
+        var p = j.el.getPointAtLength(done);
+        head.setAttribute('cx', p.x + offset.e);
+        head.setAttribute('cy', p.y + offset.f);
+        if (done >= j.len) {
+          if (j.lastOfLetter) j.letter.classList.add('dropped');
+          index += 1; done = 0;
+        }
+      }
+      if (index < jobs.length) { requestAnimationFrame(frame); return; }
+      setTimeout(function () {
+        sheet.classList.remove('cutting');
+        jobs.forEach(function (j) { j.el.style.strokeDasharray = ''; j.el.style.strokeDashoffset = ''; j.el.classList.remove('hot'); });
+        running = false;
+      }, 500);
+    }
+    requestAnimationFrame(frame);
+  }
+
+  again.addEventListener('click', cut);
+  cut();
+})();
+</script>
 </body>
 </html>
